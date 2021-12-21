@@ -25,7 +25,9 @@ app.message(async ({ message, context }) => {
 });
 
 (async () => {
-  await app.start(process.env.PORT || 3000);
+  const port = process.env.PORT || 3000;
 
-  console.log('⚡️ Forsterkern app is running!');
+  await app.start(port);
+
+  console.log(`⚡️ Forsterkern app is running on port ${port}`);
 })();
