@@ -1,5 +1,4 @@
 const { App } = require('@slack/bolt');
-
 require('dotenv').config();
 
 const app = new App({
@@ -29,5 +28,5 @@ app.message(async ({ message, context }) => {
 
   await app.start(port);
 
-  console.log(`⚡️ Forsterkern app is running on port ${port}`);
+  console.log(`⚡️ reacting-app is running on port ${port}`);
 })();
