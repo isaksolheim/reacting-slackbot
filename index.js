@@ -1,11 +1,13 @@
-const { App } = require('@slack/bolt');
+const { App, AwsLambdaReceiver } = require('@slack/bolt');
 require('dotenv').config();
 
+const awsLambdaReceiver = new AwsLambdaReceiver({
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
+});
+
 const app = new App({
-  signingSecret: process.env.SIGNING_SECRET,
-  token: process.env.TOKEN,
-  socketMode: true,
-  appToken: process.env.APP_TOKEN,
+  token: process.env.SLACK_BOT_TOKEN,
+  receiver: awsLambdaReceiver,
 });
 
 app.message(async ({ message, context }) => {
@@ -23,10 +25,7 @@ app.message(async ({ message, context }) => {
   }
 });
 
-(async () => {
-  const port = process.env.PORT || 3000;
-
-  await app.start(port);
-
-  console.log(`⚡️ reacting-app is running on port ${port}`);
-})();
+module.exports.handler = async (event, context, callback) => {
+  const handler = await awsLambdaReceiver.start();
+  return handler(event, context, callback);
+};
