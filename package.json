@@ -12,5 +12,8 @@
   "dependencies": {
     "@slack/bolt": "^3.8.1",
     "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^8.4.0"
   }
 }
